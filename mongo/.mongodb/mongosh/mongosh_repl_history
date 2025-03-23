@@ -1,0 +1,25 @@
+db.createUser({ user: "stevencode", pwd: "123456", roles: [{ role: "root", db: "admin" }] })
+use admin
+ls
+show users
+use admin
+docker exec -it proyecto_node_crud-mongo-db-1 mongosh --noauth
+show users
+ls
+-h
+--h
+-help
+show
+use admin
+use adminshow users
+show users
+use admin
+show users
+use admin
+show users
+use admin
+docker exec -it mongo-db-1 bash
+show users
+use admin
+show users
+use adminmin
