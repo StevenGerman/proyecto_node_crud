@@ -132,7 +132,9 @@ router.patch('/:id', getBook, async(req,res) => {
 
 router.delete('/:id', getBook, async (req,res) => {
     try {
-        await res.book.deleteOne();
+        await res.book.deleteOne({
+            _id: book._id
+        });
         res.json({message: 'Libro eliminado'});
     } catch (error) {
         res.status(500).json({message: error.message});
