@@ -89,6 +89,56 @@ router.post('/', async (req, res) => {
 
 })
 
+//Actualizar un libro por su ID [PUT]
+router.get('/:id', getBook, async (req, res) =>{
+    try {
+        const book = res.book;
+        book.title = req.body.title || book.title;
+        book.author = req.body.title || book.author;
+        book.genre = req.body.genre || book.genre;
+        book.publication_date = req.body.genre || book.publication_date;
+        const updateBook = await book.save();
+        res.json(updateBook);
+    } catch (error) {
+        res.status(400).json({message: error.message})
+    }
+    
+})
+//Actualizar parcialmente un libro por su ID
+router.patch('/:id', getBook, async(req,res) => {
+    if(!req.body.title && !req.body.author && !req.body.genre && !req.body.publication_date){
+        return res.status(400).json({message: "Se requiere al menos un campo 'title, 'author' o 'genre' para actualizar."});
+    }
+
+    if(req.body.title != null) {
+        res.body.title = req.body.title;
+    }
+    if(req.body.author != null) {
+        res.body.author = req.body.author;
+    }
+    if(req.body.genre != null) {
+        res.body.genre = req.body.genre;
+    }
+    if(req.body.publication_date != null) {
+        res.body.publication_date = req.body.publication_date;
+    }
+    try {
+        const updateBook = await res.book.save();
+        res.json(updateBook);
+    } catch (error) {
+        res.status(400).json({message: error.message});
+    }
+})
+
+router.delete('/:id', getBook, async (req,res) => {
+    try {
+        await res.book.remove();
+        res.json({message: 'Libro eliminado'});
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+});
+
 
 
 
