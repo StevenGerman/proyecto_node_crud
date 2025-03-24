@@ -90,13 +90,13 @@ router.post('/', async (req, res) => {
 })
 
 //Actualizar un libro por su ID [PUT]
-router.get('/:id', getBook, async (req, res) =>{
+router.put('/:id', getBook, async (req, res) =>{
     try {
         const book = res.book;
         book.title = req.body.title || book.title;
-        book.author = req.body.title || book.author;
+        book.author = req.body.author || book.author;
         book.genre = req.body.genre || book.genre;
-        book.publication_date = req.body.genre || book.publication_date;
+        book.publication_date = req.body.publication_date || book.publication_date;
         const updateBook = await book.save();
         res.json(updateBook);
     } catch (error) {
@@ -111,16 +111,16 @@ router.patch('/:id', getBook, async(req,res) => {
     }
 
     if(req.body.title != null) {
-        res.body.title = req.body.title;
+        res.book.title = req.body.title;
     }
     if(req.body.author != null) {
-        res.body.author = req.body.author;
+        res.book.author = req.body.author;
     }
     if(req.body.genre != null) {
-        res.body.genre = req.body.genre;
+        res.book.genre = req.body.genre;
     }
     if(req.body.publication_date != null) {
-        res.body.publication_date = req.body.publication_date;
+        res.book.publication_date = req.body.publication_date;
     }
     try {
         const updateBook = await res.book.save();
@@ -132,7 +132,7 @@ router.patch('/:id', getBook, async(req,res) => {
 
 router.delete('/:id', getBook, async (req,res) => {
     try {
-        await res.book.remove();
+        await res.book.deleteOne();
         res.json({message: 'Libro eliminado'});
     } catch (error) {
         res.status(500).json({message: error.message});
